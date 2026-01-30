@@ -1,0 +1,38 @@
+<!-- Add to your landing page or separate page -->
+<div class="container mt-5">
+    <h2>Upload Video</h2>
+    <form id="uploadForm">
+        <input type="email" id="userEmail" placeholder="Your email" required>
+        <input type="url" id="videoUrl" placeholder="YouTube URL or video link" required>
+        <button type="submit" class="btn btn-primary">Process Video</button>
+    </form>
+    <div id="result" class="mt-3"></div>
+</div>
+
+<script>
+document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('userEmail').value;
+    const videoUrl = document.getElementById('videoUrl').value;
+    
+    // Trigger GitHub Action
+    await fetch('https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/dispatches', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'token YOUR_GITHUB_TOKEN',
+            'Accept': 'application/vnd.github.v3+json'
+        },
+        body: JSON.stringify({
+            event_type: 'process-video',
+            client_payload: { email, video_url: videoUrl }
+        })
+    });
+    
+    document.getElementById('result').innerHTML = `
+        <div class="alert alert-info">
+            Processing started! We'll email results to ${email} in 5-10 minutes.
+        </div>
+    `;
+});
+</script>
