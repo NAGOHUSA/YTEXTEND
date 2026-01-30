@@ -1,0 +1,44 @@
+name: Process Video Content
+on:
+  repository_dispatch:
+    types: [process-video]
+  workflow_dispatch:
+    inputs:
+      video_url:
+        description: 'YouTube URL or video link'
+        required: true
+      user_email:
+        description: 'User email'
+        required: true
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: |
+          cd process
+          pip install -r requirements.txt
+          
+      - name: Run processing
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          VIDEO_URL: ${{ github.event.client_payload.video_url || inputs.video_url }}
+          USER_EMAIL: ${{ github.event.client_payload.user_email || inputs.user_email }}
+        run: |
+          cd process
+          python main.py --url "$VIDEO_URL" --email "$USER_EMAIL"
+          
+      - name: Upload results
+        uses: actions/upload-artifact@v3
+        with:
+          name: content-output
+          path: output/
