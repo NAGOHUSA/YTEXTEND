@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepurposeAI - Test Processor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --gradient: linear-gradient(135deg, var(--primary), #8b5cf6);
+        }
+        .gradient-bg { background: var(--gradient); }
+        .btn-gradient { background: var(--gradient); color: white; border: none; }
+        .btn-gradient:hover { background: var(--gradient); opacity: 0.9; color: white; }
+        .processing-step { opacity: 0.3; }
+        .processing-step.active { opacity: 1; font-weight: bold; color: var(--primary); }
+        .content-card { border-left: 4px solid var(--primary); }
+        #resultDisplay { display: none; }
+        .spinner { display: none; }
+        .processing .spinner { display: inline-block; }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h1 class="gradient-text">🧪 RepurposeAI Test Processor</h1>
+            <p class="lead">Test the AI content repurposing workflow without any setup</p>
+        </div>
+
+        <div class="row">
+            <!-- Left Column: Input -->
+            <div class="col-lg-6">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h4>1. Input Video</h4>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Test Video Selection</label>
+                            <select class="form-select" id="videoSelect">
+                                <option value="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Example Tech Tutorial</option>
+                                <option value="https://www.youtube.com/watch?v=9bZkp7q19f0">Marketing Webinar</option>
+                                <option value="https://www.youtube.com/watch?v=JGwWNGJdvx8">Business Strategy</option>
+                                <option value="custom">Custom YouTube URL</option>
+                            </select>
+                        </div>
+                        
+                        <div id="customUrlGroup" class="mb-3" style="display: none;">
+                            <label class="form-label">Custom YouTube URL</label>
+                            <input type="url" class="form-control" id="customUrl" 
+                                   placeholder="https://www.youtube.com/watch?v=...">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Content Focus (Optional)</label>
+                            <input type="text" class="form-control" id="contentFocus" 
+                                   placeholder="e.g., AI, marketing, productivity">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Target Audience</label>
+                            <select class="form-select" id="audience">
+                                <option value="general">General Audience</option>
+                                <option value="beginners">Beginners</option>
+                                <option value="professionals">Professionals</option>
+                                <option value="developers">Developers</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn btn-gradient w-100" onclick="startProcessing()">
+                            <span class="spinner-border spinner-border-sm me-2 spinner"></span>
+                            Start AI Processing
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Processing Steps -->
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4>Processing Steps</h4>
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item processing-step" id="step1">
+                                1. Fetching video metadata...
+                            </div>
+                            <div class="list-group-item processing-step" id="step2">
+                                2. Transcribing audio...
+                            </div>
+                            <div class="list-group-item processing-step" id="step3">
+                                3. Analyzing content...
+                            </div>
+                            <div class="list-group-item processing-step" id="step4">
+                                4. Generating formats...
+                            </div>
+                            <div class="list-group-item processing-step" id="step5">
+                                5. Compiling results...
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3 text-center">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                     id="progressBar" style="width: 0%"></div>
+                            </div>
+                            <small class="text-muted" id="timeElapsed">Time elapsed: 0s</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Output -->
+            <div class="col-lg-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h4>AI-Generated Content</h4>
+                        <p class="text-muted">Results will appear here after processing</p>
+                        
+                        <div id="resultDisplay">
+                            <div class="mb-3">
+                                <button class="btn btn-outline-primary btn-sm me-2" onclick="downloadAll()">
+                                    📥 Download All
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="resetDemo()">
+                                    ↻ Reset Demo
+                                </button>
+                            </div>
+                            
+                            <div class="accordion" id="contentAccordion">
+                                <!-- Content will be inserted here -->
+                            </div>
+                            
+                            <div class="mt-4">
+                                <h6>What would happen in production:</h6>
+                                <ul class="small">
+                                    <li>Real video would be transcribed using Whisper API</li>
+                                    <li>GPT-4 would generate all 10 content formats</li>
+                                    <li>Results would be emailed to you</li>
+                                    <li>Files would be saved to your account dashboard</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div id="placeholderContent" class="text-center py-5">
+                            <div class="mb-3">
+                                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10 9 9 9 8 9"></polyline>
+                                </svg>
+                            </div>
+                            <h5 class="text-muted">No content generated yet</h5>
+                            <p class="text-muted">Click "Start AI Processing" to see demo results</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- GitHub Integration Info -->
+        <div class="card shadow-sm mt-4">
+            <div class="card-body">
+                <h5>🔧 How This Would Work on GitHub</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Real GitHub Actions Workflow:</h6>
+                        <pre class="bg-light p-3 small"><code>name: Process Video
+on: [workflow_dispatch]
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Transcribe video
+        run: python transcribe.py "$VIDEO_URL"
+      
+      - name: Generate content
+        run: python generate.py --input transcription.txt</code></pre>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>File Structure:</h6>
+                        <ul class="small">
+                            <li><code>.github/workflows/</code> - Processing scripts</li>
+                            <li><code>users/{email}/</code> - User data storage</li>
+                            <li><code>outputs/{timestamp}/</code> - Generated content</li>
+                            <li><code>templates/</code> - Content templates</li>
+                        </ul>
+                        <div class="alert alert-info small">
+                            <strong>Cost:</strong> ~$0.10 per video processed<br>
+                            <strong>Time:</strong> 2-5 minutes for 10-minute video<br>
+                            <strong>Scale:</strong> Can process 1000+ videos/day
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Show/hide custom URL input
+        document.getElementById('videoSelect').addEventListener('change', function() {
+            const customGroup = document.getElementById('customUrlGroup');
+            customGroup.style.display = this.value === 'custom' ? 'block' : 'none';
+        });
+
+        let startTime;
+        let intervalId;
+
+        function startProcessing() {
+            const videoSelect = document.getElementById('videoSelect').value;
+            const customUrl = document.getElementById('customUrl').value;
+            const focus = document.getElementById('contentFocus').value || 'technology';
+            const audience = document.getElementById('audience').value;
+            
+            const videoUrl = videoSelect === 'custom' ? customUrl : videoSelect;
+            
+            if (videoSelect === 'custom' && !customUrl) {
+                alert('Please enter a YouTube URL');
+                return;
+            }
+            
+            // UI Setup
+            document.body.classList.add('processing');
+            document.getElementById('placeholderContent').style.display = 'none';
+            document.getElementById('resultDisplay').style.display = 'block';
+            
+            // Reset steps
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`step${i}`).classList.remove('active');
+            }
+            
+            // Start progress
+            startTime = Date.now();
+            updateTimer();
+            intervalId = setInterval(updateTimer, 1000);
+            
+            document.getElementById('step1').classList.add('active');
+            updateProgress(20);
+            
+            // Simulate processing steps
+            simulateStep(1, 2000, 2, 40);
+            simulateStep(2, 4000, 3, 60);
+            simulateStep(3, 6000, 4, 80);
+            simulateStep(4, 8000, 5, 100);
+            
+            // Generate results after all steps
+            setTimeout(() => {
+                clearInterval(intervalId);
+                document.body.classList.remove('processing');
+                generateResults(videoUrl, focus, audience);
+            }, 10000);
+        }
+        
+        function simulateStep(delay, nextStep, nextProgress) {
+            setTimeout(() => {
+                document.getElementById(`step${nextStep}`).classList.add('active');
+                updateProgress(nextProgress);
+            }, delay);
+        }
+        
+        function updateProgress(percent) {
+            document.getElementById('progressBar').style.width = `${percent}%`;
+        }
+        
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById('timeElapsed').textContent = `Time elapsed: ${elapsed}s`;
+        }
+        
+        function generateResults(videoUrl, focus, audience) {
+            const accordion = document.getElementById('contentAccordion');
+            accordion.innerHTML = '';
+            
+            const formats = [
+                { id: 'blog', title: '📝 Blog Post', icon: '📝', content: generateBlogPost(focus, audience) },
+                { id: 'tweets', title: '🐦 Tweet Thread', icon: '🐦', content: generateTweetThread(focus) },
+                { id: 'linkedin', title: '💼 LinkedIn Post', icon: '💼', content: generateLinkedInPost(focus) },
+                { id: 'newsletter', title: '📧 Newsletter', icon: '📧', content: generateNewsletter(focus, audience) },
+                { id: 'keypoints', title: '📊 Key Takeaways', icon: '📊', content: generateKeyPoints(focus) }
+            ];
+            
+            formats.forEach((format, index) => {
+                const item = document.createElement('div');
+                item.className = 'accordion-item content-card';
+                item.innerHTML = `
+                    <h2 class="accordion-header">
+                        <button class="accordion-button ${index > 0 ? 'collapsed' : ''}" 
+                                type="button" data-bs-toggle="collapse" 
+                                data-bs-target="#${format.id}">
+                            ${format.icon} ${format.title}
+                        </button>
+                    </h2>
+                    <div id="${format.id}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}">
+                        <div class="accordion-body">
+                            <pre style="white-space: pre-wrap;">${format.content}</pre>
+                            <button class="btn btn-sm btn-outline-primary mt-2" 
+                                    onclick="downloadText('${format.id}', '${format.title}', this)">
+                                📥 Download
+                            </button>
+                        </div>
+                    </div>
+                `;
+                accordion.appendChild(item);
+            });
+            
+            // Initialize accordion
+            new bootstrap.Collapse(document.getElementById('blog'), { toggle: true });
+        }
+        
+        // Content generation functions (simulated)
+        function generateBlogPost(focus, audience) {
+            return `# Mastering ${focus}: A Complete Guide for ${audience}
+
+## Introduction
+In today's fast-paced digital world, understanding ${focus} is more important than ever. This comprehensive guide will walk you through everything you need to know to get started.
+
+## Key Concepts
+1. **Fundamentals**: Understanding the basics
+2. **Practical Applications**: Real-world use cases
+3. **Best Practices**: Industry standards and tips
+
+## Implementation Steps
+Step 1: Set up your environment
+Step 2: Learn core principles
+Step 3: Build your first project
+
+## Conclusion
+${focus} offers incredible opportunities for ${audience}. Start your journey today and unlock new potential in your work.
+
+*Generated by RepurposeAI from video content*`;
+        }
+        
+        function generateTweetThread(focus) {
+            return `🧵 Thread: Quick Guide to ${focus}
+
+1/ ${focus} is changing how we work. Here's what you need to know:
+
+2/ Start with the basics. Don't overwhelm yourself with advanced concepts too early.
+
+3/ Practice consistently. Even 15 minutes daily builds momentum.
+
+4/ Join communities. Learning with others accelerates growth.
+
+5/ Build projects. Apply what you learn immediately.
+
+6/ Teach others. Sharing knowledge solidifies your understanding.
+
+7/ Stay curious. The field evolves quickly.
+
+#${focus.replace(/\s+/g, '')} #Learning #Tech`;
+        }
+        
+        function generateLinkedInPost(focus) {
+            return `🚀 Excited to share insights about ${focus}!
+
+After analyzing recent developments, here are key takeaways:
+
+🔑 Critical insights:
+• Accessibility has improved dramatically
+• New tools lower the barrier to entry
+• Community support is stronger than ever
+
+💡 For professionals:
+This isn't just a trend - it's a fundamental shift in how we approach problem-solving.
+
+The opportunity is now: those who adapt will lead in the coming years.
+
+What's your experience with ${focus}? Share in the comments!
+
+#ProfessionalDevelopment #${focus.replace(/\s+/g, '')} #Innovation`;
+        }
+        
+        function generateNewsletter(focus, audience) {
+            return `Subject: This Week in ${focus} - Your Monthly Update
+
+Hi there,
+
+Here's your monthly roundup of everything ${focus}:
+
+📌 Featured Topic
+This month, we're focusing on practical applications for ${audience}. The landscape has changed significantly, with new tools making adoption easier than ever.
+
+🔥 Hot This Month
+• New framework releases
+• Community highlights
+• Upcoming events
+
+🛠️ Tutorial Corner
+Step-by-step guide to getting started with ${focus} in under 30 minutes.
+
+📚 Resource Library
+Curated list of free resources for deepening your knowledge.
+
+Until next time,
+The RepurposeAI Team
+
+P.S. Reply to this email with topics you'd like covered!`;
+        }
+        
+        function generateKeyPoints(focus) {
+            return `• ${focus} is accessible to beginners with the right resources
+• Practical application beats theoretical knowledge
+• Community support accelerates learning
+• Regular practice yields better results than intensive bursts
+• Teaching others reinforces your own understanding
+• The field is evolving - stay adaptable
+• Start small, build incrementally
+• Focus on fundamentals before advanced topics`;
+        }
+        
+        function downloadText(id, title, button) {
+            const content = document.querySelector(`#${id} pre`).textContent;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${title.toLowerCase().replace(/\s+/g, '-')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            // Visual feedback
+            button.textContent = '✓ Downloaded';
+            button.classList.remove('btn-outline-primary');
+            button.classList.add('btn-outline-success');
+            setTimeout(() => {
+                button.textContent = '📥 Download';
+                button.classList.remove('btn-outline-success');
+                button.classList.add('btn-outline-primary');
+            }, 2000);
+        }
+        
+        function downloadAll() {
+            const buttons = document.querySelectorAll('[onclick*="downloadText"]');
+            buttons.forEach((btn, i) => {
+                setTimeout(() => btn.click(), i * 500);
+            });
+        }
+        
+        function resetDemo() {
+            document.getElementById('resultDisplay').style.display = 'none';
+            document.getElementById('placeholderContent').style.display = 'block';
+            document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('timeElapsed').textContent = 'Time elapsed: 0s';
+            
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`step${i}`).classList.remove('active');
+            }
+            
+            if (intervalId) clearInterval(intervalId);
+            document.body.classList.remove('processing');
+        }
+    </script>
+</body>
+</html>
