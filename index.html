@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepurposeAI - Turn 1 Video into 10 Content Pieces</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        .gradient-bg { background: var(--gradient); }
+        .gradient-text { background: var(-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .feature-icon { width: 60px; height: 60px; border-radius: 12px; }
+        .pricing-card { transition: transform 0.3s; border: 2px solid transparent; }
+        .pricing-card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .btn-gradient { background: var(-gradient); color: white; border: none; }
+        .btn-gradient:hover { background: var(-gradient); opacity: 0.9; color: white; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold gradient-text" href="#">RepurposeAI</a>
+            <div class="d-flex">
+                <a href="#pricing" class="btn btn-gradient btn-sm me-2">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-5">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Turn <span class="text-warning">1 video</span> into <span class="text-warning">10 content pieces</span> automatically</h1>
+                    <p class="lead mb-4">AI transforms your videos into blog posts, tweets, LinkedIn posts, and more. Perfect for creators, marketers, and businesses.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#pricing" class="btn btn-light btn-lg px-4">Start Free Trial</a>
+                        <a href="#how" class="btn btn-outline-light btn-lg px-4">See How It Works</a>
+                    </div>
+                    <p class="mt-3"><small>No credit card needed for trial</small></p>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.1&auto=format&fit=crop&w=800&q=80" 
+                         class="img-fluid rounded shadow-lg" alt="Content Creation Dashboard">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how" class="py-5 bg-light">
+        <div class="container py-5">
+            <h2 class="text-center mb-5">How It Works</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon gradient-bg text-white d-inline-flex align-items-center justify-content-center mb-3">
+                                <span class="fs-3">1</span>
+                            </div>
+                            <h4>Upload Video</h4>
+                            <p>Paste a YouTube link or upload your video. We support MP4, MOV, and YouTube URLs.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon gradient-bg text-white d-inline-flex align-items-center justify-content-center mb-3">
+                                <span class="fs-3">2</span>
+                            </div>
+                            <h4>AI Magic</h4>
+                            <p>Our AI transcribes, analyzes, and creates multiple content formats in your brand voice.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon gradient-bg text-white d-inline-flex align-items-center justify-content-center mb-3">
+                                <span class="fs-3">3</span>
+                            </div>
+                            <h4>Download & Publish</h4>
+                            <p>Get blog posts, social media captions, newsletters, and more. Ready to publish in minutes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Output Formats -->
+    <section class="py-5">
+        <div class="container py-5">
+            <h2 class="text-center mb-5">From 1 Video, Get All This:</h2>
+            <div class="row g-3">
+                <div class="col-6 col-md-3">
+                    <div class="card text-center p-3 border">
+                        <h5 class="mb-0">📝 Blog Post</h5>
+                        <small>1000+ words SEO optimized</small>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card text-center p-3 border">
+                        <h5 class="mb-0">🐦 Tweet Thread</h5>
+                        <small>5-10 engaging tweets</small>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card text-center p-3 border">
+                        <h5 class="mb-0">💼 LinkedIn Post</h5>
+                        <small>Professional formatting</small>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card text-center p-3 border">
+                        <h5 class="mb-0">📧 Newsletter</h5>
+                        <small>Email-ready format</small>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card text-center p-3 border">
+                        <h5 class="mb-0">📱 Instagram Captions</h5>
+                        <small>With hashtags</small>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card text-center p-3 border">
+                        <h5 class="mb-0">🎥 Short Scripts</h5>
+                        <small>For Reels/TikToks</small>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card text-center p-3 border">
+                        <h5 class="mb-0">📊 Key Takeaways</h5>
+                        <small>Bullet point summary</small>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card text-center p-3 border">
+                        <h5 class="mb-0">🔍 SEO Keywords</h5>
+                        <small>Optimized phrases</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-5 bg-light">
+        <div class="container py-5">
+            <h2 class="text-center mb-5">Simple, Transparent Pricing</h2>
+            <div class="row justify-content-center">
+                <!-- Free Plan -->
+                <div class="col-md-4 mb-4">
+                    <div class="card pricing-card h-100">
+                        <div class="card-body p-4">
+                            <h5 class="card-title">Starter</h5>
+                            <h2 class="fw-bold">Free</h2>
+                            <p class="text-muted">Try it out</p>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">✓ 1 video/month</li>
+                                <li class="mb-2">✓ 3 content formats</li>
+                                <li class="mb-2">✓ Basic processing</li>
+                                <li class="mb-2">✗ No priority queue</li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-primary w-100" onclick="signup('free')">Start Free</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pro Plan -->
+                <div class="col-md-4 mb-4">
+                    <div class="card pricing-card h-100 border-primary">
+                        <div class="card-body p-4">
+                            <span class="badge bg-primary mb-3">MOST POPULAR</span>
+                            <h5 class="card-title">Creator</h5>
+                            <h2 class="fw-bold">$19<span class="fs-6 text-muted">/month</span></h2>
+                            <p class="text-muted">Perfect for content creators</p>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">✓ 20 videos/month</li>
+                                <li class="mb-2">✓ All 10 content formats</li>
+                                <li class="mb-2">✓ Custom brand voice</li>
+                                <li class="mb-2">✓ Priority processing</li>
+                                <li class="mb-2">✓ Export to platforms</li>
+                            </ul>
+                            <a href="#" class="btn btn-gradient w-100" onclick="signup('pro')">Start 7-Day Trial</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Business -->
+                <div class="col-md-4 mb-4">
+                    <div class="card pricing-card h-100">
+                        <div class="card-body p-4">
+                            <h5 class="card-title">Business</h5>
+                            <h2 class="fw-bold">$49<span class="fs-6 text-muted">/month</span></h2>
+                            <p class="text-muted">For teams & agencies</p>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">✓ 100 videos/month</li>
+                                <li class="mb-2">✓ Team collaboration</li>
+                                <li class="mb-2">✓ API access</li>
+                                <li class="mb-2">✓ White-label reports</li>
+                                <li class="mb-2">✓ Dedicated support</li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-primary w-100" onclick="signup('business')">Contact Sales</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-5">
+        <div class="container py-5">
+            <h2 class="text-center mb-5">Frequently Asked Questions</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    How long does processing take?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Typically 5-15 minutes for a 10-minute video. Pro users get priority processing (2-5 minutes).
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    What video formats do you support?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    YouTube links, MP4, MOV, AVI, and WebM files up to 500MB.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    Can I customize the AI's writing style?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes! Pro and Business plans can train the AI on your existing content to match your brand voice.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>RepurposeAI</h5>
+                    <p>AI-powered content repurposing for creators.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">© 2024 RepurposeAI. All rights reserved.</p>
+                    <p>Hosted on GitHub</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Signup Modal -->
+    <div class="modal fade" id="signupModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Get Started</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="signupForm">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="emailInput" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Choose Plan</label>
+                            <select class="form-select" id="planSelect">
+                                <option value="free">Free (1 video/month)</option>
+                                <option value="pro">Pro Trial (7 days, then $19/month)</option>
+                                <option value="business">Business (Contact for pricing)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-gradient w-100">Create Account</button>
+                    </form>
+                    <div id="successMessage" class="mt-3 text-center d-none">
+                        <div class="alert alert-success">
+                            <h5>Check Your Email!</h5>
+                            <p>We've sent you a confirmation email with next steps.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function signup(plan) {
+            const modal = new bootstrap.Modal(document.getElementById('signupModal'));
+            document.getElementById('planSelect').value = plan;
+            modal.show();
+        }
+        
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('emailInput').value;
+            const plan = document.getElementById('planSelect').value;
+            
+            // In production: Send to your backend/GitHub Action
+            console.log('Signup:', {email, plan});
+            
+            // Show success
+            document.getElementById('signupForm').classList.add('d-none');
+            document.getElementById('successMessage').classList.remove('d-none');
+            
+            // In real app, this would trigger a GitHub Action via webhook
+            // For now, we'll simulate
+            setTimeout(() => {
+                bootstrap.Modal.getInstance(document.getElementById('signupModal')).hide();
+                document.getElementById('signupForm').classList.remove('d-none');
+                document.getElementById('successMessage').classList.add('d-none');
+                document.getElementById('emailInput').value = '';
+                alert('Welcome! Check your email for login instructions.');
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
