@@ -1,0 +1,13 @@
+name: Handle Stripe Payment
+on:
+  repository_dispatch:
+    types: [stripe-webhook]
+
+jobs:
+  process-payment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update user plan
+        run: |
+          # Parse webhook and update user file
+          echo "Payment received for ${{ github.event.client_payload.customer_email }}"
