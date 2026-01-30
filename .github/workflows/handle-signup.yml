@@ -1,0 +1,36 @@
+name: Handle User Signup
+on:
+  repository_dispatch:
+    types: [user-signup]
+
+jobs:
+  signup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        
+      - name: Create user file
+        run: |
+          mkdir -p users/user-data
+          echo "email: ${{ github.event.client_payload.email }}" > "users/user-data/${{ github.event.client_payload.email }}.yml"
+          echo "plan: ${{ github.event.client_payload.plan }}" >> "users/user-data/${{ github.event.client_payload.email }}.yml"
+          echo "created: $(date)" >> "users/user-data/${{ github.event.client_payload.email }}.yml"
+          
+      - name: Send welcome email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USER }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Welcome to RepurposeAI!"
+          to: ${{ github.event.client_payload.email }}
+          from: RepurposeAI <noreply@repurposeai.com>
+          body: |
+            Welcome! Your account is ready.
+            
+            Next steps:
+            1. Login at https://your-username.github.io/repurpose-ai/
+            2. Paste your first video URL
+            3. Get 10 content pieces in minutes!
